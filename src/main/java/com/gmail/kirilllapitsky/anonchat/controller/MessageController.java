@@ -3,7 +3,6 @@ package com.gmail.kirilllapitsky.anonchat.controller;
 import com.gmail.kirilllapitsky.anonchat.dto.MessageDto;
 import com.gmail.kirilllapitsky.anonchat.entity.Message;
 import com.gmail.kirilllapitsky.anonchat.service.MessageService;
-import com.gmail.kirilllapitsky.anonchat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
