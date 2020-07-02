@@ -4,19 +4,23 @@ import com.gmail.kirilllapitsky.anonchat.dto.MessageDto;
 import com.gmail.kirilllapitsky.anonchat.entity.Message;
 import com.gmail.kirilllapitsky.anonchat.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("message")
+@RequestMapping
 public class MessageController {
-    @Autowired
-    private MessageService messageService;
+    private final SimpMessagingTemplate template;
+    private final MessageService messageService;
 
-    @PostMapping("save")
-    void save(@RequestBody MessageDto messageDto) {
-        messageService.saveMessage(messageDto);
+    @Autowired
+    MessageController(SimpMessagingTemplate template, MessageService messageService) {
+        this.template = template;
+        this.messageService = messageService;
     }
 
     @GetMapping("getBeforeId")
@@ -27,5 +31,12 @@ public class MessageController {
     @GetMapping("getMessages")
     List<Message> getMessages() {
         return messageService.getMessages();
+    }
+
+    @MessageMapping("/send/message")
+    void saveMessage(MessageDto messageDto) {
+        Message message = messageService.saveMessage(messageDto);
+        this.template.convertAndSend("/message", message);
+
     }
 }

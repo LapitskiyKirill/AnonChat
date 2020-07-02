@@ -19,10 +19,10 @@ public class MessageService {
         this.userRepository = userRepository;
     }
 
-    public void saveMessage(MessageDto messageDto) {
+    public Message saveMessage(MessageDto messageDto) {
         User user = userRepository.findById(messageDto.user_id).get();
         Message message = new Message(user, messageDto.value);
-        messageRepository.save(message);
+        return messageRepository.save(message);
     }
 
     public List<Message> getMessage(Long id) {
