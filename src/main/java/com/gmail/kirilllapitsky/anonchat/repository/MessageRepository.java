@@ -8,8 +8,13 @@ import java.util.Optional;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
-    List<Message> findMessagesByIdBefore(Long id);
+    List<Message> findTop30MessagesByIdBeforeOrderByIdDesc(Long id);
 
     Optional<Message> findById(Long id);
+
     Optional<Message> findTopByOrderByIdDesc();
+
+    Optional<Message> findTopByOrderByIdAsc();
+
 }
+

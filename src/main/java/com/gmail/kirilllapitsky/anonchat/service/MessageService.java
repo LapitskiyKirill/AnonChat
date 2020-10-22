@@ -26,13 +26,17 @@ public class MessageService {
     }
 
     public List<Message> getMessage(Long id) {
-        return messageRepository.findMessagesByIdBefore(id);
+        return messageRepository.findTop30MessagesByIdBeforeOrderByIdDesc(id);
     }
 
     public List<Message> getMessages() {
         Message message = messageRepository.findTopByOrderByIdDesc().get();
-        List<Message> messages = messageRepository.findMessagesByIdBefore(message.getId());
-        messages.add(message);
+        List<Message> messages = messageRepository.findTop30MessagesByIdBeforeOrderByIdDesc(message.getId());
+        messages.add(0, message);
         return messages;
+    }
+
+    public Message getFirstMessage() {
+        return messageRepository.findTopByOrderByIdAsc().get();
     }
 }

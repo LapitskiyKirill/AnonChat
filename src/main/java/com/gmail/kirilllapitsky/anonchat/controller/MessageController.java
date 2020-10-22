@@ -5,7 +5,6 @@ import com.gmail.kirilllapitsky.anonchat.entity.Message;
 import com.gmail.kirilllapitsky.anonchat.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +30,11 @@ public class MessageController {
     @GetMapping("getMessages")
     List<Message> getMessages() {
         return messageService.getMessages();
+    }
+
+    @GetMapping("getFirstMessage")
+    Message getFirstMessage() {
+        return messageService.getFirstMessage();
     }
 
     @MessageMapping("/send/message")
